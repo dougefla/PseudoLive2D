@@ -41,7 +41,11 @@ python tools/auto_cut.py
 ### Inference
 - Run the following command in the docker container to generate the animation.
 ```
-python inference.py -s assets/examples/source/s0.jpg -d video_clips
+python inference.py --stream -s assets/examples/source/s0.jpg -d video_clips
+```
+Or you can run the following command to generate the animation from a single video.
+```
+python inference.py -s path/to/source/image.jpg -d path/to/driving/video.mp4
 ```
 - Change the source image and driving video by modifying the `-s` and `-d` arguments.
 - You can get the results in the `animations` folder in the host machine.
