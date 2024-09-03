@@ -71,7 +71,7 @@ def main_stream(args):
         args.driving = os.path.join(driving_root, f"clip_{i}.avi")
 
     # concate all clips
-    subprocess.run(["ffmpeg", "-f", "concat", "-safe", "0", "-i", "mylist.txt", "-c", "copy", "output.mp4"])
+    subprocess.run(["ffmpeg", "-f", "concat", "-safe", "0", "-i", "mylist.txt", "-c", "copy", f"animations/{basename(args.source)}--output.mp4"])
 
 
 def main(args):
