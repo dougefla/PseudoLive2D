@@ -34,3 +34,4 @@ src/utils/dependencies/XPose/models/UniPose/ops/dist
 src/utils/dependencies/XPose/models/UniPose/ops/MultiScaleDeformableAttention.egg-info
 
 results/*
+.vscode/launch.json

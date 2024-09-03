@@ -80,7 +80,7 @@ class LivePortraitPipeline(object):
         if np.abs(arr1 - arr2).mean() > threshold*np.abs(arr2).mean():
             return True
 
-
+    # This function is used to make the motion template more stable
     def make_safe_motion_template(self, template_dct, threshold=0.1):
         safe_template_dct = template_dct.copy()
         # Calculate the average parameters of all frames
