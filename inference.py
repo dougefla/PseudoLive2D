@@ -32,10 +32,8 @@ def fast_check_args(args: ArgumentConfig):
         raise FileNotFoundError(f"driving info not found: {args.driving}")
 
 # This is the main function for long video.
-def main_stream():
-    # set tyro theme
-    tyro.extras.set_accent_color("bright_cyan")
-    args = tyro.cli(ArgumentConfig)
+def main_stream(args):
+
     driving_root = args.driving
     args.driving = os.path.join(driving_root, f"clip_1.avi")
     i=1
@@ -76,35 +74,37 @@ def main_stream():
     subprocess.run(["ffmpeg", "-f", "concat", "-safe", "0", "-i", "mylist.txt", "-c", "copy", "output.mp4"])
 
 
-# def main():
-#     # set tyro theme
-#     tyro.extras.set_accent_color("bright_cyan")
-#     args = tyro.cli(ArgumentConfig)
+def main(args):
 
-#     ffmpeg_dir = os.path.join(os.getcwd(), "ffmpeg")
-#     if osp.exists(ffmpeg_dir):
-#         os.environ["PATH"] += (os.pathsep + ffmpeg_dir)
+    ffmpeg_dir = os.path.join(os.getcwd(), "ffmpeg")
+    if osp.exists(ffmpeg_dir):
+        os.environ["PATH"] += (os.pathsep + ffmpeg_dir)
 
-#     if not fast_check_ffmpeg():
-#         raise ImportError(
-#             "FFmpeg is not installed. Please install FFmpeg (including ffmpeg and ffprobe) before running this script. https://ffmpeg.org/download.html"
-#         )
+    if not fast_check_ffmpeg():
+        raise ImportError(
+            "FFmpeg is not installed. Please install FFmpeg (including ffmpeg and ffprobe) before running this script. https://ffmpeg.org/download.html"
+        )
 
-#     fast_check_args(args)
+    fast_check_args(args)
 
-#     # specify configs for inference
-#     inference_cfg = partial_fields(InferenceConfig, args.__dict__)
-#     crop_cfg = partial_fields(CropConfig, args.__dict__)
+    # specify configs for inference
+    inference_cfg = partial_fields(InferenceConfig, args.__dict__)
+    crop_cfg = partial_fields(CropConfig, args.__dict__)
 
-#     live_portrait_pipeline = LivePortraitPipeline(
-#         inference_cfg=inference_cfg,
-#         crop_cfg=crop_cfg
-#     )
+    live_portrait_pipeline = LivePortraitPipeline(
+        inference_cfg=inference_cfg,
+        crop_cfg=crop_cfg
+    )
 
-#     # run
-#     live_portrait_pipeline.execute(args)
+    # run
+    live_portrait_pipeline.execute(args)
 
 
 if __name__ == "__main__":
-    # main()
-    main_stream()
+    # set tyro theme
+    tyro.extras.set_accent_color("bright_cyan")
+    args = tyro.cli(ArgumentConfig)
+    if args.stream:
+        main_stream(args)
+    else:
+        main(args)
